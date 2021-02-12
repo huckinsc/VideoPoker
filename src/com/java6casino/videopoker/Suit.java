@@ -1,4 +1,3 @@
 package com.java6casino.videopoker;
 
-enum Suit {
-}
+enum Suit {CLUBS, DIAMONDS, HEARTS, SPADES}
