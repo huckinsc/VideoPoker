@@ -13,7 +13,11 @@ class Card {
 
     // Business Methods
     public void print() {
-        System.out.println("[" + rank.getRankCharacter() + suit.getSuitCharacter() + "]");
+        System.out.println(generatePrintString());
+    }
+
+    private String generatePrintString() {
+        return "[" + rank.getRankCharacter() + suit.getSuitCharacter() + "]";
     }
 
     // Getters
