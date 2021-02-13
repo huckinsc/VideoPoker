@@ -16,7 +16,7 @@ class Card {
         System.out.println(generatePrintString());
     }
 
-    private String generatePrintString() {
+    public String generatePrintString() {
         return "[" + rank.getRankCharacter() + suit.getSuitCharacter() + "]";
     }
 
