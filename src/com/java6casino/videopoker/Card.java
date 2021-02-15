@@ -31,6 +31,6 @@ class Card {
 
     @Override
     public String toString() {
-        return "Card{Rank= " + rank + " Suit= " + suit + "}";
+        return "{The " + rank + " of " + suit + "}";
     }
 }
