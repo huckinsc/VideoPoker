@@ -32,12 +32,17 @@ public class Hand {
 
         List<Card> handCopy = new ArrayList<>();
         handCopy.addAll(hand);
-        handCopy.sort((card1, card2) -> Integer.compare(card1.getRank().getRankValue(),card1.getRank().getRankValue()));
+        handCopy.sort((card1, card2) -> Integer.compare(card1.getRank().getRankValue(),card2.getRank().getRankValue()));
         isSameSuit = checkSuits(handCopy);
         Map<Rank, Integer> rankCounts = calculateRankCounts(handCopy);
 
-        if (isSameSuit && rankCounts.size() == 5 && isInSequence(handCopy)){
-            // TODO: Check for straight flush
+        if (isSameSuit && isInSequence(handCopy)){
+            if (isHighStraight(handCopy)) {
+                result = WinType.ROYAL_FLUSH;
+            }
+            else {
+                result = WinType.STRAIGHT_FLUSH;
+            }
         }
         else if (rankCounts.containsValue(4)){
             result = WinType.FOUR_OF_A_KIND;
@@ -49,7 +54,7 @@ public class Hand {
             result = WinType.FLUSH;
         }
         else if (isInSequence(handCopy)) {
-            // TODO: check for straight
+            result = WinType.STRAIGHT;
         }
         else if (rankCounts.containsValue(3)){
             result = WinType.THREE_OF_A_KIND;
@@ -58,7 +63,14 @@ public class Hand {
             result = WinType.TWO_PAIRS;
         }
         else if (rankCounts.containsValue(2)) {
-            // TODO: check for Jacks or better
+            for (Map.Entry<Rank,Integer> e : rankCounts.entrySet()) {
+                if (e.getValue() == 2) {
+                    if (e.getKey().getRankValue() >= Rank.JACK.getRankValue()) {
+                        result = WinType.JACKS_OR_BETTER;
+                    }
+                    break;
+                }
+            }
         }
         return result;
     }
@@ -102,7 +114,27 @@ public class Hand {
     }
 
     boolean isInSequence(List<Card> hand) {
-        return false;
+        boolean result = false;
+        if (calculateRankCounts(hand).size() == hand.size()){
+            if ((hand.get(hand.size()-1).rank.getRankValue() - hand.get(0).rank.getRankValue()) == hand.size()-1) {
+                result = true;
+            }
+            else if (isHighStraight(hand)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    boolean isHighStraight(List<Card> hand){
+        boolean result = false;
+        if (calculateRankCounts(hand).size() == hand.size()){
+            if (hand.get(0).rank == Rank.ACE && hand.get(4).rank == Rank.KING &&
+                    (hand.get(4).rank.getRankValue() - hand.get(1).rank.getRankValue()) == 3){
+                result = true;
+            }
+        }
+        return result;
     }
 
     // Getters and Setters

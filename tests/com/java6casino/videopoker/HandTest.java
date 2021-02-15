@@ -91,6 +91,28 @@ public class HandTest {
     }
 
     @Test
+    public void calculateWin_shouldReturnROYAL_FLUSH_whenHighSequenceAndSameSuit() {
+        hand.addCard(new Card(Rank.TEN,Suit.SPADES));
+        hand.addCard(new Card(Rank.ACE,Suit.SPADES));
+        hand.addCard(new Card(Rank.QUEEN,Suit.SPADES));
+        hand.addCard(new Card(Rank.JACK,Suit.SPADES));
+        hand.addCard(new Card(Rank.KING,Suit.SPADES));
+        WinType type = hand.calculateWin();
+        assertEquals(WinType.ROYAL_FLUSH,type);
+    }
+
+    @Test
+    public void calculateWin_shouldReturnSTRAIGHT_FLUSH_whenINSequenceAndSameSuit() {
+        hand.addCard(new Card(Rank.TEN,Suit.SPADES));
+        hand.addCard(new Card(Rank.EIGHT,Suit.SPADES));
+        hand.addCard(new Card(Rank.QUEEN,Suit.SPADES));
+        hand.addCard(new Card(Rank.JACK,Suit.SPADES));
+        hand.addCard(new Card(Rank.NINE,Suit.SPADES));
+        WinType type = hand.calculateWin();
+        assertEquals(WinType.STRAIGHT_FLUSH,type);
+    }
+
+    @Test
     public void calculateWin_shouldReturnFOUR_OF_A_KIND_whenFourCardsSameRank() {
         hand.addCard(new Card(Rank.KING,Suit.SPADES));
         hand.addCard(new Card(Rank.NINE,Suit.SPADES));
@@ -144,4 +166,104 @@ public class HandTest {
         WinType type = hand.calculateWin();
         assertEquals(WinType.TWO_PAIRS,type);
     }
+
+    @Test
+    public void calculateWin_shouldReturnJACK_OR_BETTER_whenOnePairBetterThanJacks() {
+        hand.addCard(new Card(Rank.KING,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.JACK,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.EIGHT,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.JACK,Suit.HEARTS));
+        hand.addCard(new Card(Rank.FOUR,Suit.SPADES));
+        WinType type = hand.calculateWin();
+        assertEquals(WinType.JACKS_OR_BETTER,type);
+    }
+
+    @Test
+    public void calculateWin_shouldReturnNO_WIN_whenOnePairLessThanJacks() {
+        hand.addCard(new Card(Rank.FOUR,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.TEN,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.EIGHT,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.TEN,Suit.HEARTS));
+        hand.addCard(new Card(Rank.KING,Suit.SPADES));
+        WinType type = hand.calculateWin();
+        assertEquals(WinType.NO_WIN,type);
+    }
+
+    @Test
+    public void isInSequence_shouldReturnFalse_whenNotInSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.ACE,Suit.HEARTS));
+        list.add(new Card(Rank.THREE,Suit.DIAMONDS));
+        list.add(new Card(Rank.NINE,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        list.add(new Card(Rank.KING,Suit.HEARTS));
+        assertFalse(hand.isInSequence(list));
+    }
+
+    @Test
+    public void isInSequence_shouldReturnTrue_whenLowSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.ACE,Suit.HEARTS));
+        list.add(new Card(Rank.TWO,Suit.DIAMONDS));
+        list.add(new Card(Rank.THREE,Suit.HEARTS));
+        list.add(new Card(Rank.FOUR,Suit.HEARTS));
+        list.add(new Card(Rank.FIVE,Suit.HEARTS));
+        assertTrue(hand.isInSequence(list));
+    }
+
+    @Test
+    public void isInSequence_shouldReturnTrue_whenMidSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.EIGHT,Suit.HEARTS));
+        list.add(new Card(Rank.NINE,Suit.DIAMONDS));
+        list.add(new Card(Rank.TEN,Suit.HEARTS));
+        list.add(new Card(Rank.JACK,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        assertTrue(hand.isInSequence(list));
+    }
+
+    @Test
+    public void isInSequence_shouldReturnTrue_whenHighSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.ACE,Suit.HEARTS));
+        list.add(new Card(Rank.TEN,Suit.DIAMONDS));
+        list.add(new Card(Rank.JACK,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        list.add(new Card(Rank.KING,Suit.HEARTS));
+        assertTrue(hand.isInSequence(list));
+    }
+
+    @Test
+    public void isHighStraight_shouldReturnTrue_whenHighSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.ACE,Suit.HEARTS));
+        list.add(new Card(Rank.TEN,Suit.DIAMONDS));
+        list.add(new Card(Rank.JACK,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        list.add(new Card(Rank.KING,Suit.HEARTS));
+        assertTrue(hand.isHighStraight(list));
+    }
+
+    @Test
+    public void isHighStraight_shouldReturnFalse_whenNotInSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.ACE,Suit.HEARTS));
+        list.add(new Card(Rank.NINE,Suit.DIAMONDS));
+        list.add(new Card(Rank.JACK,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        list.add(new Card(Rank.KING,Suit.HEARTS));
+        assertFalse(hand.isHighStraight(list));
+    }
+
+    @Test
+    public void isHighStraight_shouldReturnFalse_whenNotHighSequence() {
+        List<Card> list = new ArrayList<>();
+        list.add(new Card(Rank.EIGHT,Suit.HEARTS));
+        list.add(new Card(Rank.NINE,Suit.DIAMONDS));
+        list.add(new Card(Rank.TEN,Suit.HEARTS));
+        list.add(new Card(Rank.JACK,Suit.HEARTS));
+        list.add(new Card(Rank.QUEEN,Suit.HEARTS));
+        assertFalse(hand.isHighStraight(list));
+    }
+
 }
