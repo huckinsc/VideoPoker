@@ -18,6 +18,27 @@ public class HandTest {
     }
 
     @Test
+    public void replaceCard_shouldReturnNewCardAtIndex_whenValidIndex() {
+        hand.addCard(new Card(Rank.KING,Suit.SPADES));
+        hand.addCard(new Card(Rank.NINE,Suit.SPADES));
+        hand.addCard(new Card(Rank.KING,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.KING,Suit.HEARTS));
+        hand.addCard(new Card(Rank.NINE,Suit.CLUBS));
+        hand.replaceCard(2,new Card(Rank.ACE,Suit.HEARTS));
+        assertEquals(new Card(Rank.ACE,Suit.HEARTS), hand.getHand().get(2));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void replaceCard_shouldThrowException_whenInvalidIndex() {
+        hand.addCard(new Card(Rank.KING,Suit.SPADES));
+        hand.addCard(new Card(Rank.NINE,Suit.SPADES));
+        hand.addCard(new Card(Rank.KING,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.KING,Suit.HEARTS));
+        hand.addCard(new Card(Rank.NINE,Suit.CLUBS));
+        hand.replaceCard(6,new Card(Rank.ACE,Suit.HEARTS));
+    }
+
+    @Test
     public void checkSuits_shouldReturnTrue_whenAllSuitsSame() {
         List<Card> list = new ArrayList<>();
         list.add(new Card(Rank.TEN,Suit.HEARTS));
@@ -123,6 +144,4 @@ public class HandTest {
         WinType type = hand.calculateWin();
         assertEquals(WinType.TWO_PAIRS,type);
     }
-
-
 }

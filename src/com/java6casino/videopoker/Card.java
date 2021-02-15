@@ -1,5 +1,7 @@
 package com.java6casino.videopoker;
 
+import java.util.Objects;
+
 class Card {
     // Fields
     Rank rank;
@@ -32,5 +34,18 @@ class Card {
     @Override
     public String toString() {
         return "{The " + rank + " of " + suit + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return getRank() == card.getRank() && getSuit() == card.getSuit();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRank(), getSuit());
     }
 }

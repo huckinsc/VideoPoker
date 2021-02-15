@@ -4,14 +4,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Hand {
+    // Fields
     List<Card>hand = new ArrayList<>();
 
+    // Methods
     public void addCard(Card card){
         if (hand.size() < 5){
             hand.add(card);
         }
         else {
             // TODO: Throw exception.
+        }
+    }
+
+    public void replaceCard(int index, Card newCard) throws IllegalArgumentException{
+        if (index >= 0 && index < hand.size()) {
+            hand.set(index,newCard);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid Index: Index should be 0 to hand-size - 1");
         }
     }
 
@@ -92,5 +103,11 @@ public class Hand {
 
     boolean isInSequence(List<Card> hand) {
         return false;
+    }
+
+    // Getters and Setters
+
+    public List<Card> getHand() {
+        return hand;
     }
 }
