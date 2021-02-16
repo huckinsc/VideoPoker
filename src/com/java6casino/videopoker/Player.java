@@ -16,7 +16,9 @@ class Player {
 
     public Player(String name){
         setName(name);
-        getCredits();
+
+        Hand playerHand = new Hand();
+
 
     }
 
@@ -30,7 +32,12 @@ class Player {
             if (bet > credits) {
                 System.out.println("You don't have enough to cover. please try again"); //
                 placeBet();
-            }else{
+            }
+            if (bet <= 0){
+                System.out.println("Please place a valid bet");
+                placeBet();
+            }
+            else{
                 credits -= bet;
             }
             }
@@ -45,11 +52,8 @@ class Player {
 
     void holdCards() {
 
+
     }
-
-
-
-
 
 
        //ACCESSORS
@@ -65,4 +69,6 @@ class Player {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }//End of Class

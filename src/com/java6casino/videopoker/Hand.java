@@ -39,6 +39,7 @@ public class Hand {
         if (isSameSuit && isInSequence(handCopy)){
             if (isHighStraight(handCopy)) {
                 result = WinType.ROYAL_FLUSH;
+
             }
             else {
                 result = WinType.STRAIGHT_FLUSH;

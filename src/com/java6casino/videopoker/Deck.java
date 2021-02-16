@@ -3,8 +3,9 @@ package com.java6casino.videopoker;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Deck {
+public class Deck {
     private ArrayList deck;
+    private int currentCard;
 
       //Ctors
     public  Deck() {
@@ -19,8 +20,17 @@ class Deck {
         }// end of loop
 
         Collections.shuffle(deck);
-        System.out.println(deck);
+        //System.out.println(deck); // shows all 52 cards are shuffled
     }
+   public void deal(){
+        for (int i = 0; i < 1; i++){
+            for (int j = 0; j < 5; j++)
+                System.out.println(deck.get(j));// Deals 5 cards
+
+            }
+        }
+
+
 
 
 
