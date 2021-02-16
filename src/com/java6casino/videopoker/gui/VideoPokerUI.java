@@ -1,12 +1,13 @@
 package com.java6casino.videopoker.gui;
 
+import com.java6casino.videopoker.controllers.VideoPokerGUIController;
 import com.java6casino.videopoker.util.CardLoader;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 class VideoPokerUI extends JFrame{
     // Finals
@@ -51,6 +52,8 @@ class VideoPokerUI extends JFrame{
     };
 
     // Fields
+    VideoPokerGUIController controller = new VideoPokerGUIController();
+
     private JButton[] cardButtons = {null,null,null,null,null};
     private JLabel[] holdLabels = {null,null,null,null,null};
     private JLabel[] prizeLabels = {null,null,null,null,null,null,null,null,null};
@@ -113,6 +116,7 @@ class VideoPokerUI extends JFrame{
             add(card);
             cardButtons[i] = card;
         }
+
     }
 
     private void addCardHeldLabels() {
@@ -133,6 +137,8 @@ class VideoPokerUI extends JFrame{
             JLabel label = new JLabel(prizeLabelStrings[i]);
             label.setBounds(PRIZE_LABEL_X_OFFSET,(i * LABEL_Y_SIZE) + PRIZE_LABEL_Y_OFFSET,
                     PRIZE_LABEL_X_SIZE,LABEL_Y_SIZE);
+            label.setOpaque(false);
+            label.setBackground(Color.GREEN);
             add(label);
             prizeLabels[i] = label;
         }
@@ -169,15 +175,28 @@ class VideoPokerUI extends JFrame{
         betButtons[3] = temp;
     }
 
+    private void clearPrizeHighlight(){
+        for (JLabel l : prizeLabels){
+            l.setOpaque(false);
+        }
+    }
+
     // Listener Classes
     private class HandleCardButtonClick implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            int requestedHold = 0;
             for (int i = 0; i < 5; i++) {
                 if (e.getSource() == cardButtons[i]){
-                    holdLabels[i].setVisible(!holdLabels[i].isVisible());
+                    //holdLabels[i].setVisible(!holdLabels[i].isVisible());
+                    requestedHold = i;
                     break;
                 }
+            }
+            controller.placeHold(requestedHold);
+            List<Boolean> list = controller.getHolds();
+            for (int i = 0; i < list.size(); i++) {
+                holdLabels[i].setVisible(list.get(i));
             }
         }
     }
@@ -186,6 +205,17 @@ class VideoPokerUI extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Deal button pressed...");
+            List<Integer> cardList = controller.getHand();
+            for (int i = 0; i < cardList.size(); i++) {
+                cardButtons[i].setIcon(cardLoader.getCardImage(cardList.get(i)));
+            }
+
+            int handVal = controller.getHandValue();
+            clearPrizeHighlight();
+            if (handVal < 9) {
+                prizeLabels[handVal].setOpaque(true);
+            }
+            repaint();
         }
     }
 
@@ -214,7 +244,9 @@ class VideoPokerUI extends JFrame{
                     newValue -= 10;
                     break;
             }
-            playerBetLabel.setText(Integer.toString(newValue));
+            if (controller.changeBet(newValue)) {
+                playerBetLabel.setText(Integer.toString(newValue));
+            }
         }
     }
 }
