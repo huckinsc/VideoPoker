@@ -209,7 +209,6 @@ class VideoPokerUI extends JFrame{
     }
 
     private void prizeHighlight(int prizeValue){
-        System.out.println("Prize Value: " + prizeValue);
         if (prizeValue < 9) {
             prizeLabels[prizeValue].setBackground(Color.GREEN);
             prizeLabels[prizeValue].setOpaque(true);
