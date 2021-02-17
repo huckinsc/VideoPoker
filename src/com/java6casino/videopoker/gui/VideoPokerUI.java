@@ -54,7 +54,7 @@ class VideoPokerUI extends JFrame{
     };
 
     // Fields
-    VideoPokerGUIController controller = new VideoPokerGUIController();
+    VideoPokerGUIController controller;
 
     private JButton[] cardButtons = {null,null,null,null,null};
     private JLabel[] holdLabels = {null,null,null,null,null};
@@ -69,8 +69,11 @@ class VideoPokerUI extends JFrame{
     private JLabel winningBannerLabel;
 
     // Constructors
-    public VideoPokerUI(String title) {
+    public VideoPokerUI(String title, VideoPokerGUIController controller) {
         super(title);
+
+        this.controller = controller;
+
         setLocation(200,200);
         setSize(FRAME_X_SIZE, FRAME_Y_SIZE);
         setResizable(false);

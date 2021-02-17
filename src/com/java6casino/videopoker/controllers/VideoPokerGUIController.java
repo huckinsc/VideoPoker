@@ -13,8 +13,8 @@ public class VideoPokerGUIController {
     private Dealer system;
     PlayPhase phase;
 
-    public VideoPokerGUIController() {
-        system = new Dealer();
+    public VideoPokerGUIController(Dealer system) {
+        this.system = system;
         phase = system.getPhase();
     }
 
