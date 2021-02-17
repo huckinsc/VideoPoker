@@ -2,7 +2,7 @@ package com.java6casino.videopoker;
 
 import java.util.Objects;
 
-class Card {
+public class Card {
     // Fields
     Rank rank;
     Suit suit;

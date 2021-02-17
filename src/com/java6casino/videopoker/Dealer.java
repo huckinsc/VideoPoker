@@ -6,7 +6,7 @@ package com.java6casino.videopoker;
 import java.util.ArrayList;
 import java.util.List;
 
-class Dealer {
+public class Dealer {
     private final int HAND_SIZE = 5;
 
     //FIELDS

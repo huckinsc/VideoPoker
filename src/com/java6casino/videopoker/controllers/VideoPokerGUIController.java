@@ -1,5 +1,8 @@
 package com.java6casino.videopoker.controllers;
 
+import com.java6casino.videopoker.Card;
+import com.java6casino.videopoker.Dealer;
+import com.java6casino.videopoker.PlayPhase;
 import com.java6casino.videopoker.WinType;
 
 import java.lang.reflect.Field;
@@ -7,30 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VideoPokerGUIController {
-
+    private Dealer system;
+    PlayPhase phase;
 
     public VideoPokerGUIController() {
-
-
+        system = new Dealer();
+        phase = system.getPhase();
     }
 
     // request to system to place a hold on a specified card
     public void placeHold(int card){
-        System.out.println("In controller: placeHold on " + card);
-
+        if (phase == PlayPhase.HOLDING) {
+            system.getP1().holdCard(card);
+        }
     }
 
     // get and return to the UI the holds list
     public List<Boolean> getHolds(){
-        System.out.println("In controller: getHolds");
-        return null;
+        //System.out.println("In controller: getHolds");
+        return system.getP1().getHeldCards();
     }
+
 
     // Get hand data for updating the UI
     public List<Integer> getHand(){
         System.out.println("In controller: getHand");
         List<Integer> result = new ArrayList<>();
-
+        for (Card c : system.getPlayerHand().getHand()) {
+            int cardValue = translateCardToPositionReference(c);
+            result.add(cardValue);
+        }
         return result;
     }
 
@@ -81,7 +90,26 @@ public class VideoPokerGUIController {
             default:
                 result = 9;
         }
-
         return result;
+    }
+
+    private int translateCardToPositionReference(Card card) {
+        int result = 0;
+        switch (card.getSuit()){
+            case CLUBS:
+                result = 0 * 13;
+                break;
+            case DIAMONDS:
+                result = 1 * 13;
+                break;
+            case HEARTS:
+                result = 2 * 13;
+                break;
+            case SPADES:
+                result = 3 * 13;
+                break;
+        }
+        result += card.getRank().getRankValue();
+        return (result -1);
     }
 }

@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-class Player {
+public class Player {
     private final int HAND_SIZE = 5;
 
     //FIELDS
@@ -67,7 +67,7 @@ class Player {
     }
 
 
-    void holdCard(int cardPosition) {
+    public void holdCard(int cardPosition) {
         heldCards.set(cardPosition, !heldCards.get(cardPosition));
     }
 
