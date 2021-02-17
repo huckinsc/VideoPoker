@@ -141,7 +141,7 @@ class VideoPokerUI extends JFrame{
         for (int i = 0; i < cardButtons.length; i++){
             JButton card = new JButton();
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
-            card.setIcon(generateImageIcon("assets/Cards/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
+            card.setIcon(generateImageIcon("assets/Banner/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
             card.addActionListener(handleCardButtonClick);
             add(card);
             cardButtons[i] = card;
