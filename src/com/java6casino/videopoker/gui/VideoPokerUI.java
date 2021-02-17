@@ -42,15 +42,15 @@ class VideoPokerUI extends JFrame{
     private final int CARD_Y_SIZE = 75;
 
     private final String[] prizeLabelStrings = {
-            "Royal Flush.............................................................250",
-            "Straight Flush...........................................................50",
-            "Four of a Kind...........................................................25",
-            "Full House..................................................................9",
-            "Flush..........................................................................6",
-            "Straight......................................................................4",
-            "Three of a Kind...........................................................3",
-            "Two Pairs....................................................................2",
-            "Pair of Jacks of Better..................................................1"
+            "Royal Flush............................................................x250",
+            "Straight Flush..........................................................x50",
+            "Four of a Kind..........................................................x25",
+            "Full House.................................................................x9",
+            "Flush.........................................................................x6",
+            "Straight.....................................................................x4",
+            "Three of a Kind..........................................................x3",
+            "Two Pairs...................................................................x2",
+            "Pair of Jacks of Better.................................................x1"
     };
 
     // Fields
@@ -66,6 +66,7 @@ class VideoPokerUI extends JFrame{
     private JButton[] betButtons = {null,null,null,null};
     private JLabel bettingPromptLabel;
     private JLabel holdingPromptLabel;
+    private JLabel winningBannerLabel;
 
     // Constructors
     public VideoPokerUI(String title) {
@@ -118,6 +119,20 @@ class VideoPokerUI extends JFrame{
         bettingPromptLabel.setOpaque(true);
         bettingPromptLabel.setBackground(Color.CYAN);
         add(bettingPromptLabel);
+
+        ImageIcon banner = null;
+        try {
+            Image img = ImageIO.read(getClass().getResource("/Banner/winnerBanner.png"));
+            img = img.getScaledInstance(300,50,Image.SCALE_SMOOTH);
+            banner = new ImageIcon(img);
+        } catch (IOException e) {
+
+        }
+        winningBannerLabel = new JLabel();
+        winningBannerLabel.setBounds(50,0,300,50);
+        winningBannerLabel.setIcon(banner);
+        winningBannerLabel.setVisible(false);
+        add(winningBannerLabel);
 
 
         addBetButtons();
@@ -248,7 +263,11 @@ class VideoPokerUI extends JFrame{
     private class HandleDealButtonClick implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            winningBannerLabel.setVisible(false);
             int newCreditAmount = controller.processDealDrawEvent(Integer.parseInt(playerBetLabel.getText()));
+            if (newCreditAmount > Integer.parseInt(playerCreditLabel.getText())) {
+                winningBannerLabel.setVisible(true);
+            }
             playerCreditLabel.setText(Integer.toString(newCreditAmount));
             clearPrizeHighlight();
             prizeHighlight(controller.getHandValue());
