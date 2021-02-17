@@ -46,17 +46,34 @@ public class VideoPokerGUIController {
     // Request to check if the bet amount is valid
     public boolean changeBet(int betAmount){
         System.out.println("In controller: changeBet");
-        int playerCredits = 100; // get from system
-
-        if (betAmount > 0 && betAmount <= playerCredits){
-            return true;
+        if (phase == PlayPhase.BETTING) {
+            int playerCredits = system.getP1().getCredits();
+            if (betAmount > 0 && betAmount <= playerCredits){
+                return true;
+            }
         }
         return false;
     }
 
+    // Process the Deal/Draw event.  Retuns player credits as these events can affect that value.
+    public int processDealDrawEvent(int betAmount) {
+        if (phase == PlayPhase.BETTING) {
+            system.transitionToHoldingPhase(betAmount);
+        }
+        else if (phase == PlayPhase.HOLDING) {
+            system.transitionToBettingPhase();
+        }
+        phase = system.getPhase();
+        return system.getP1().getCredits();
+    }
+
+    public int getPlayPhase(){
+        return (phase == PlayPhase.BETTING)? 0 : 1;
+    }
+
     // get hand value
     public int getHandValue() {
-        WinType type;
+        WinType type = system.getPlayerHand().calculateWin();
         int result;
         type = WinType.FULL_HOUSE; // get from system
         switch (type){

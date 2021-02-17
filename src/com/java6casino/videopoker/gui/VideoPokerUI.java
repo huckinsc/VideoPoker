@@ -3,10 +3,12 @@ package com.java6casino.videopoker.gui;
 import com.java6casino.videopoker.controllers.VideoPokerGUIController;
 import com.java6casino.videopoker.util.CardLoader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 class VideoPokerUI extends JFrame{
@@ -101,22 +103,27 @@ class VideoPokerUI extends JFrame{
         add(betLabel);
 
         addBetButtons();
-
-
     }
 
     // Methods
     private void addCardButtons(){
         HandleCardButtonClick handleCardButtonClick = new HandleCardButtonClick();
+        ImageIcon cardBack = null;
+        try {
+            Image img = ImageIO.read(getClass().getResource("/Cards/cardBack_red2.png"));
+            img = img.getScaledInstance(CARD_X_SIZE,CARD_Y_SIZE,Image.SCALE_SMOOTH);
+            cardBack = new ImageIcon(img);
+        } catch (IOException e) {
+
+        }
         for (int i = 0; i < cardButtons.length; i++){
             JButton card = new JButton();
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
-            card.setIcon(cardLoader.getCardImage(i));
+            card.setIcon(cardBack);
             card.addActionListener(handleCardButtonClick);
             add(card);
             cardButtons[i] = card;
         }
-
     }
 
     private void addCardHeldLabels() {
@@ -181,6 +188,12 @@ class VideoPokerUI extends JFrame{
         }
     }
 
+    private void prizeHighlight(int prizeValue){
+        if (prizeValue < 10) {
+            prizeLabels[prizeValue].setBackground(Color.GREEN);
+        }
+    }
+
     // Listener Classes
     private class HandleCardButtonClick implements ActionListener {
         @Override
@@ -188,7 +201,6 @@ class VideoPokerUI extends JFrame{
             int requestedHold = 0;
             for (int i = 0; i < 5; i++) {
                 if (e.getSource() == cardButtons[i]){
-                    //holdLabels[i].setVisible(!holdLabels[i].isVisible());
                     requestedHold = i;
                     break;
                 }
@@ -205,15 +217,26 @@ class VideoPokerUI extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Deal button pressed...");
-            List<Integer> cardList = controller.getHand();
-            for (int i = 0; i < cardList.size(); i++) {
-                cardButtons[i].setIcon(cardLoader.getCardImage(cardList.get(i)));
-            }
+//            List<Integer> cardList = controller.getHand();
+//            for (int i = 0; i < cardList.size(); i++) {
+//                cardButtons[i].setIcon(cardLoader.getCardImage(cardList.get(i)));
+//            }
+//
+//            int handVal = controller.getHandValue();
+//            clearPrizeHighlight();
+//            if (handVal < 9) {
+//                prizeLabels[handVal].setOpaque(true);
+//            }
 
-            int handVal = controller.getHandValue();
+            int newCreditAmount = controller.processDealDrawEvent(Integer.parseInt(playerBetLabel.getText()));
+            playerCreditLabel.setText(Integer.toString(newCreditAmount));
             clearPrizeHighlight();
-            if (handVal < 9) {
-                prizeLabels[handVal].setOpaque(true);
+            prizeHighlight(controller.getHandValue());
+            if (controller.getPlayPhase() == 0) {
+                dealButton.setText("Draw");
+            }
+            else {
+                dealButton.setText("Deal");
             }
             repaint();
         }
