@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Deck {
-    private ArrayList deck;
+    private ArrayList<Card> deck;
     private int currentCard;
 
-      //Ctors
-    public  Deck() {
+    //Ctors
+    public Deck() {
         this.deck = new ArrayList();
         for (int i = 0; i < 13; i++) {
             Rank r = Rank.values()[i];
@@ -22,17 +22,18 @@ public class Deck {
         Collections.shuffle(deck);
         //System.out.println(deck); // shows all 52 cards are shuffled
     }
-   public void deal(){
-        for (int i = 0; i < 1; i++){
+
+    public void deal() {
+        for (int i = 0; i < 1; i++) {
             for (int j = 0; j < 5; j++)
                 System.out.println(deck.get(j));// Deals 5 cards
 
-            }
         }
+    }
 
-
-
-
+    public Card drawNextCard() {
+        return deck.remove(0);
+    }
 
 
 }//End of class

@@ -9,10 +9,10 @@ class Player {
     private final int HAND_SIZE = 5;
 
     //FIELDS
-    String name;
+    private String name;
     private int credits = 100;
-    int bet;
-    List<Boolean> heldCards = new ArrayList<>();
+    private int bet;
+    private List<Boolean> heldCards = new ArrayList<>();
     private Scanner scanner;
 
 
