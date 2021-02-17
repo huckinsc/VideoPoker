@@ -194,6 +194,18 @@ class VideoPokerUI extends JFrame{
         }
     }
 
+    private void updateCards() {
+        List<Integer> cardList = controller.getHand();
+        for (int i = 0; i < cardList.size(); i++) {
+            cardButtons[i].setIcon(cardLoader.getCardImage(cardList.get(i)));
+        }
+        List<Boolean> holdsList = controller.getHolds();
+        for (int i = 0; i < holdsList.size(); i++) {
+            holdLabels[i].setVisible(holdsList.get(i));
+        }
+
+    }
+
     // Listener Classes
     private class HandleCardButtonClick implements ActionListener {
         @Override
@@ -238,6 +250,7 @@ class VideoPokerUI extends JFrame{
             else {
                 dealButton.setText("Deal");
             }
+            updateCards();
             repaint();
         }
     }
