@@ -135,4 +135,15 @@ class Dealer {
     //ACCESSORS
 
 
+    public Player getP1() {
+        return p1;
+    }
+
+    public PlayPhase getPhase() {
+        return phase;
+    }
+
+    public Hand getPlayerHand() {
+        return playerHand;
+    }
 }
