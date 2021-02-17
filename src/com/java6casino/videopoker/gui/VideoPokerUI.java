@@ -72,6 +72,7 @@ class VideoPokerUI extends JFrame{
         setSize(FRAME_X_SIZE, FRAME_Y_SIZE);
         setResizable(false);
         setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         cardLoader = new CardLoader(CARD_X_SIZE,CARD_Y_SIZE);
 
@@ -189,8 +190,10 @@ class VideoPokerUI extends JFrame{
     }
 
     private void prizeHighlight(int prizeValue){
-        if (prizeValue < 10) {
+        System.out.println("Prize Value: " + prizeValue);
+        if (prizeValue < 9) {
             prizeLabels[prizeValue].setBackground(Color.GREEN);
+            prizeLabels[prizeValue].setOpaque(true);
         }
     }
 
@@ -228,27 +231,15 @@ class VideoPokerUI extends JFrame{
     private class HandleDealButtonClick implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Deal button pressed...");
-//            List<Integer> cardList = controller.getHand();
-//            for (int i = 0; i < cardList.size(); i++) {
-//                cardButtons[i].setIcon(cardLoader.getCardImage(cardList.get(i)));
-//            }
-//
-//            int handVal = controller.getHandValue();
-//            clearPrizeHighlight();
-//            if (handVal < 9) {
-//                prizeLabels[handVal].setOpaque(true);
-//            }
-
             int newCreditAmount = controller.processDealDrawEvent(Integer.parseInt(playerBetLabel.getText()));
             playerCreditLabel.setText(Integer.toString(newCreditAmount));
             clearPrizeHighlight();
             prizeHighlight(controller.getHandValue());
             if (controller.getPlayPhase() == 0) {
-                dealButton.setText("Draw");
+                dealButton.setText("Deal");
             }
             else {
-                dealButton.setText("Deal");
+                dealButton.setText("Draw");
             }
             updateCards();
             repaint();

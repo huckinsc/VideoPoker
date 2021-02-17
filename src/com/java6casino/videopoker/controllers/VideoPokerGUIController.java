@@ -75,7 +75,6 @@ public class VideoPokerGUIController {
     public int getHandValue() {
         WinType type = system.getPlayerHand().calculateWin();
         int result;
-        type = WinType.FULL_HOUSE; // get from system
         switch (type){
             case ROYAL_FLUSH:
                 result = 0;

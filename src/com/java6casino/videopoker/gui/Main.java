@@ -5,5 +5,4 @@ public class Main {
         VideoPokerUI videoPokerUI = new VideoPokerUI("Video Poker");
         videoPokerUI.setVisible(true);
     }
-
 }
