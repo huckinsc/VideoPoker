@@ -66,7 +66,7 @@ public class Hand {
         else if (rankCounts.containsValue(2)) {
             for (Map.Entry<Rank,Integer> e : rankCounts.entrySet()) {
                 if (e.getValue() == 2) {
-                    if (e.getKey().getRankValue() >= Rank.JACK.getRankValue()) {
+                    if (e.getKey().getRankValue() >= Rank.JACK.getRankValue() || e.getKey() == Rank.ACE) {
                         result = WinType.JACKS_OR_BETTER;
                     }
                     break;

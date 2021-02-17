@@ -179,6 +179,17 @@ public class HandTest {
     }
 
     @Test
+    public void calculateWin_shouldReturnJACK_OR_BETTER_whenOnePairBetterThanJacks_AcesCheck() {
+        hand.addCard(new Card(Rank.KING,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.ACE,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.EIGHT,Suit.DIAMONDS));
+        hand.addCard(new Card(Rank.ACE,Suit.HEARTS));
+        hand.addCard(new Card(Rank.FOUR,Suit.SPADES));
+        WinType type = hand.calculateWin();
+        assertEquals(WinType.JACKS_OR_BETTER,type);
+    }
+
+    @Test
     public void calculateWin_shouldReturnNO_WIN_whenOnePairLessThanJacks() {
         hand.addCard(new Card(Rank.FOUR,Suit.DIAMONDS));
         hand.addCard(new Card(Rank.TEN,Suit.DIAMONDS));
