@@ -3,6 +3,7 @@ package com.java6casino.videopoker.util;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class CardLoader {
     private List<ImageIcon> cardImages = new ArrayList<>();
 
     public CardLoader(int xSize,int ySize) {
+        // TODO: java.nio.file.Files -dirList?
         String[] cardNames = {"cardClubsA.png", "cardClubs2.png", "cardClubs3.png", "cardClubs4.png", "cardClubs5.png", "cardClubs6.png", "cardClubs7.png",
                 "cardClubs8.png", "cardClubs9.png", "cardClubs10.png", "cardClubsJ.png", "cardClubsQ.png", "cardClubsK.png",
                 "cardDiamondsA.png", "cardDiamonds2.png", "cardDiamonds3.png", "cardDiamonds4.png", "cardDiamonds5.png", "cardDiamonds6.png", "cardDiamonds7.png",
@@ -22,8 +24,10 @@ public class CardLoader {
         for (String s : cardNames) {
             String fileName = null;
             try {
-                fileName = "/Cards/" + s;
-                Image img = ImageIO.read(getClass().getResource(fileName));
+                //fileName = "Cards/" + s;
+                //Image img = ImageIO.read(getClass().getResource(fileName));
+                fileName = "assets/Cards/" + s;
+                Image img = ImageIO.read(new File(fileName));
                 img = img.getScaledInstance(xSize,ySize,Image.SCALE_SMOOTH);
                 cardImages.add(new ImageIcon(img));
             }

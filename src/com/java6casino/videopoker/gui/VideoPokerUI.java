@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -125,7 +126,7 @@ class VideoPokerUI extends JFrame{
 
         winningBannerLabel = new JLabel();
         winningBannerLabel.setBounds(50,0,300,50);
-        winningBannerLabel.setIcon(generateImageIcon("/Banner/winnerBanner.png",300,50));
+        winningBannerLabel.setIcon(generateImageIcon("assets/Banner/winnerBanner.png",300,50));
         winningBannerLabel.setVisible(false);
         add(winningBannerLabel);
 
@@ -140,7 +141,7 @@ class VideoPokerUI extends JFrame{
         for (int i = 0; i < cardButtons.length; i++){
             JButton card = new JButton();
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
-            card.setIcon(generateImageIcon("/Cards/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
+            card.setIcon(generateImageIcon("assets/Cards/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
             card.addActionListener(handleCardButtonClick);
             add(card);
             cardButtons[i] = card;
@@ -231,7 +232,7 @@ class VideoPokerUI extends JFrame{
     private ImageIcon generateImageIcon(String file,int xSize,int ySize) {
         ImageIcon icon = null;
         try {
-            Image img = ImageIO.read(getClass().getResource(file));
+            Image img = ImageIO.read(new File(file));
             img = img.getScaledInstance(xSize,ySize,Image.SCALE_SMOOTH);
             icon = new ImageIcon(img);
         } catch (IOException e) {
