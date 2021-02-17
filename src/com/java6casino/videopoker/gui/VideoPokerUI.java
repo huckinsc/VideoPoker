@@ -136,8 +136,6 @@ class VideoPokerUI extends JFrame{
     // Methods
     private void addCardButtons(){
         HandleCardButtonClick handleCardButtonClick = new HandleCardButtonClick();
-        ImageIcon cardBack = null;
-
         for (int i = 0; i < cardButtons.length; i++){
             JButton card = new JButton();
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
@@ -236,7 +234,7 @@ class VideoPokerUI extends JFrame{
             img = img.getScaledInstance(xSize,ySize,Image.SCALE_SMOOTH);
             icon = new ImageIcon(img);
         } catch (IOException e) {
-
+            System.out.println("Error loading file: " + file);
         }
         return icon;
     }

@@ -1,19 +1,21 @@
 package com.java6casino.videopoker;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Hand {
+    // Constants
+    private final int HAND_SIZE = 5;
+
     // Fields
     List<Card>hand = new ArrayList<>();
 
     // Methods
-    public void addCard(Card card){
+    public void addCard(Card card) throws IllegalArgumentException{
         if (hand.size() < 5){
             hand.add(card);
         }
         else {
-            // TODO: Throw exception.
+            throw new IllegalArgumentException("Error: Supplied Value is out of bounds");
         }
     }
 

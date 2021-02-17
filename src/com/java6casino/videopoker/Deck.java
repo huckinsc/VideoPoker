@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Deck {
     private ArrayList<Card> deck;
-    private int currentCard;
+    // private int currentCard;
 
     //Ctors
     public Deck() {

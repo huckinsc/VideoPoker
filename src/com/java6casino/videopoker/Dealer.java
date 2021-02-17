@@ -3,7 +3,6 @@ package com.java6casino.videopoker;
 
 //import jdk.internal.jrtfs.JrtFileAttributeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer {
@@ -40,7 +39,7 @@ public class Dealer {
 
     public void transitionToHoldingPhase(int bet){
         if (phase == PlayPhase.BETTING) {
-            p1.unholdAllCards();
+            p1.unHoldAllCards();
             p1.payBet(bet);
             receiveBet(bet);
             deal();

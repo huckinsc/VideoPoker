@@ -4,19 +4,28 @@ import com.java6casino.videopoker.Card;
 import com.java6casino.videopoker.Dealer;
 import com.java6casino.videopoker.PlayPhase;
 import com.java6casino.videopoker.WinType;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoPokerGUIController {
+    //Constants
+    private final int CARDS_IN_A_SUIT = 13;
+    private final int CLUBS_OFFSET = 0;
+    private final int DIAMONDS_OFFSET = 1;
+    private final int HEARTS_OFFSET = 2;
+    private final int SPADES_OFFSET = 3;
+
+    // Fields
     private Dealer system;
     PlayPhase phase;
 
+    // Ctors
     public VideoPokerGUIController(Dealer system) {
         this.system = system;
         phase = system.getPhase();
     }
+
+    // Business Methods
 
     // request to system to place a hold on a specified card
     public void placeHold(int card){
@@ -27,14 +36,12 @@ public class VideoPokerGUIController {
 
     // get and return to the UI the holds list
     public List<Boolean> getHolds(){
-        //System.out.println("In controller: getHolds");
         return system.getP1().getHeldCards();
     }
 
 
     // Get hand data for updating the UI
     public List<Integer> getHand(){
-        System.out.println("In controller: getHand");
         List<Integer> result = new ArrayList<>();
         for (Card c : system.getPlayerHand().getHand()) {
             int cardValue = translateCardToPositionReference(c);
@@ -45,7 +52,6 @@ public class VideoPokerGUIController {
 
     // Request to check if the bet amount is valid
     public boolean changeBet(int betAmount){
-        System.out.println("In controller: changeBet");
         if (phase == PlayPhase.BETTING) {
             int playerCredits = system.getP1().getCredits();
             if (betAmount > 0 && betAmount <= playerCredits){
@@ -55,7 +61,7 @@ public class VideoPokerGUIController {
         return false;
     }
 
-    // Process the Deal/Draw event.  Retuns player credits as these events can affect that value.
+    // Process the Deal/Draw event.  Returns player credits as these events can affect that value.
     public int processDealDrawEvent(int betAmount) {
         if (phase == PlayPhase.BETTING) {
             system.transitionToHoldingPhase(betAmount);
@@ -113,16 +119,16 @@ public class VideoPokerGUIController {
         int result = 0;
         switch (card.getSuit()){
             case CLUBS:
-                result = 0 * 13;
+                result = CLUBS_OFFSET * CARDS_IN_A_SUIT;
                 break;
             case DIAMONDS:
-                result = 1 * 13;
+                result = DIAMONDS_OFFSET * CARDS_IN_A_SUIT;
                 break;
             case HEARTS:
-                result = 2 * 13;
+                result = HEARTS_OFFSET * CARDS_IN_A_SUIT;
                 break;
             case SPADES:
-                result = 3 * 13;
+                result = SPADES_OFFSET * CARDS_IN_A_SUIT;
                 break;
         }
         result += card.getRank().getRankValue();

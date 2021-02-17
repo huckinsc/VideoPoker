@@ -21,14 +21,14 @@ public class Player {
     public Player(String name) {
         setName(name);
         Hand playerHand = new Hand();
-        unholdAllCards();
+        unHoldAllCards();
 
 
     }
 
     // Business Methods
 
-    void unholdAllCards() {
+    void unHoldAllCards() {
         heldCards.clear();
         for (int i = 0; i < HAND_SIZE; i++) {
             heldCards.add(Boolean.FALSE);
