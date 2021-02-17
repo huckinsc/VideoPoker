@@ -64,6 +64,8 @@ class VideoPokerUI extends JFrame{
     private JLabel playerCreditLabel;
     private JLabel playerBetLabel;
     private JButton[] betButtons = {null,null,null,null};
+    private JLabel bettingPromptLabel;
+    private JLabel holdingPromptLabel;
 
     // Constructors
     public VideoPokerUI(String title) {
@@ -102,6 +104,21 @@ class VideoPokerUI extends JFrame{
         JLabel betLabel = new JLabel("Bet:",SwingConstants.LEFT);
         betLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET + 30,CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
         add(betLabel);
+
+        holdingPromptLabel = new JLabel("Select cards to hold",SwingConstants.CENTER);
+        holdingPromptLabel.setBounds(50,275,300,25);
+        holdingPromptLabel.setOpaque(true);
+        holdingPromptLabel.setBackground(Color.CYAN);
+        holdingPromptLabel.setVisible(false);
+        add(holdingPromptLabel);
+
+        bettingPromptLabel = new JLabel("Adjust Bet",SwingConstants.CENTER);
+        bettingPromptLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET + 50,
+                CREDITS_LABEL_X_SIZE + PLAYER_CREDITS_LABEL_X_SIZE ,LABEL_Y_SIZE );
+        bettingPromptLabel.setOpaque(true);
+        bettingPromptLabel.setBackground(Color.CYAN);
+        add(bettingPromptLabel);
+
 
         addBetButtons();
     }
@@ -237,9 +254,13 @@ class VideoPokerUI extends JFrame{
             prizeHighlight(controller.getHandValue());
             if (controller.getPlayPhase() == 0) {
                 dealButton.setText("Deal");
+                holdingPromptLabel.setVisible(false);
+                bettingPromptLabel.setVisible(true);
             }
             else {
                 dealButton.setText("Draw");
+                holdingPromptLabel.setVisible(true);
+                bettingPromptLabel.setVisible(false);
             }
             updateCards();
             repaint();
