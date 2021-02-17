@@ -123,20 +123,11 @@ class VideoPokerUI extends JFrame{
         bettingPromptLabel.setBackground(Color.CYAN);
         add(bettingPromptLabel);
 
-        ImageIcon banner = null;
-        try {
-            Image img = ImageIO.read(getClass().getResource("/Banner/winnerBanner.png"));
-            img = img.getScaledInstance(300,50,Image.SCALE_SMOOTH);
-            banner = new ImageIcon(img);
-        } catch (IOException e) {
-
-        }
         winningBannerLabel = new JLabel();
         winningBannerLabel.setBounds(50,0,300,50);
-        winningBannerLabel.setIcon(banner);
+        winningBannerLabel.setIcon(generateImageIcon("/Banner/winnerBanner.png",300,50));
         winningBannerLabel.setVisible(false);
         add(winningBannerLabel);
-
 
         addBetButtons();
     }
@@ -145,17 +136,11 @@ class VideoPokerUI extends JFrame{
     private void addCardButtons(){
         HandleCardButtonClick handleCardButtonClick = new HandleCardButtonClick();
         ImageIcon cardBack = null;
-        try {
-            Image img = ImageIO.read(getClass().getResource("/Cards/cardBack_red2.png"));
-            img = img.getScaledInstance(CARD_X_SIZE,CARD_Y_SIZE,Image.SCALE_SMOOTH);
-            cardBack = new ImageIcon(img);
-        } catch (IOException e) {
 
-        }
         for (int i = 0; i < cardButtons.length; i++){
             JButton card = new JButton();
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
-            card.setIcon(cardBack);
+            card.setIcon(generateImageIcon("/Cards/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
             card.addActionListener(handleCardButtonClick);
             add(card);
             cardButtons[i] = card;
@@ -241,7 +226,18 @@ class VideoPokerUI extends JFrame{
         for (int i = 0; i < holdsList.size(); i++) {
             holdLabels[i].setVisible(holdsList.get(i));
         }
+    }
 
+    private ImageIcon generateImageIcon(String file,int xSize,int ySize) {
+        ImageIcon icon = null;
+        try {
+            Image img = ImageIO.read(getClass().getResource(file));
+            img = img.getScaledInstance(xSize,ySize,Image.SCALE_SMOOTH);
+            icon = new ImageIcon(img);
+        } catch (IOException e) {
+
+        }
+        return icon;
     }
 
     // Listener Classes
