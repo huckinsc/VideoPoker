@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealer {
+    // Constants
     private final int HAND_SIZE = 5;
 
     //FIELDS
@@ -24,10 +25,7 @@ public class Dealer {
         //playerHand = new Hand();
         p1 = new Player("Player");
         phase = PlayPhase.BETTING;
-
-
     }
-
 
     //METHODS
     private void deal() {
@@ -68,59 +66,38 @@ public class Dealer {
         }
     }
 
-
     int payWinnings() {
-
-
         int winnings = p1.getCredits();
-
-
         switch (playerHand.calculateWin()) {
-
             case ROYAL_FLUSH:
                 System.out.println(" you won:" + WinType.ROYAL_FLUSH.getPayOut());
                 //winnings = WinType.ROYAL_FLUSH.getPayOut() * p1.bet;
                 break;
-
-
             case STRAIGHT_FLUSH:
                 System.out.println("you won:" + WinType.STRAIGHT_FLUSH.getPayOut());
                 //winnings += WinType.STRAIGHT_FLUSH.getPayOut() * p1.bet;
-
-
             case FOUR_OF_A_KIND:
                 System.out.println("You won:" + WinType.FOUR_OF_A_KIND.getPayOut());
                 //winnings += WinType.FOUR_OF_A_KIND.getPayOut() * p1.bet;
-
             case FLUSH:
                 System.out.println("You won " + WinType.FOUR_OF_A_KIND.getPayOut());
                 //winnings += WinType.FLUSH.getPayOut() * p1.bet;
-
             case STRAIGHT:
                 System.out.println("You won" + WinType.STRAIGHT.getPayOut());
                 //winnings += WinType.STRAIGHT.getPayOut() * p1.bet;
-
             case THREE_OF_A_KIND:
                 System.out.println("You won" + WinType.THREE_OF_A_KIND.getPayOut());
                 //winnings += WinType.THREE_OF_A_KIND.getPayOut() * p1.bet;
-
             case TWO_PAIRS:
                 System.out.println("You won" + WinType.TWO_PAIRS.getPayOut());
                 //winnings += WinType.TWO_PAIRS.getPayOut() * p1.bet;
-
             case JACKS_OR_BETTER:
                 System.out.println("You won" + WinType.JACKS_OR_BETTER.getPayOut());
                 //winnings += WinType.JACKS_OR_BETTER.getPayOut() * p1.bet;
             case NO_WIN:
                 System.out.println("Sorry you lose");
-
-
         }
-
-
         return winnings;
-
-
     }
 
     void receiveBet(int betAmount) {
@@ -130,7 +107,6 @@ public class Dealer {
     int payoutWinnings(WinType win){
         return bet * win.getPayOut();
     }
-
 
     //ACCESSORS
 
