@@ -60,10 +60,14 @@ public class Player {
 
     }
 
-    void payBet(int betAmount){
+    void payBet(int betAmount) throws IllegalArgumentException{
         if (betAmount <= getCredits() ) {
             setCredits(getCredits() - betAmount);
         }
+        else {
+            throw new IllegalArgumentException("Requested bet is higher than available credits.");
+        }
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.java6casino.videopoker.gui;
 
+import com.java6casino.videopoker.PlayPhase;
 import com.java6casino.videopoker.controllers.VideoPokerGUIController;
 import com.java6casino.videopoker.util.CardLoader;
 
@@ -68,13 +69,14 @@ class VideoPokerUI extends JFrame{
     private JLabel bettingPromptLabel;
     private JLabel holdingPromptLabel;
     private JLabel winningBannerLabel;
+    private JFrame frame;
 
     // Constructors
     public VideoPokerUI(String title, VideoPokerGUIController controller) {
         super(title);
 
         this.controller = controller;
-
+        frame = this;
         setLocation(200,200);
         setSize(FRAME_X_SIZE, FRAME_Y_SIZE);
         setResizable(false);
@@ -261,25 +263,42 @@ class VideoPokerUI extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             winningBannerLabel.setVisible(false);
-            int newCreditAmount = controller.processDealDrawEvent(Integer.parseInt(playerBetLabel.getText()));
+            int newCreditAmount = Integer.parseInt(playerCreditLabel.getText());
+            try {
+                newCreditAmount = controller.processDealDrawEvent(frame,Integer.parseInt(playerBetLabel.getText()));
+            } catch (IllegalArgumentException exception) {
+                JOptionPane.showMessageDialog(frame,"You do not have enough credits to cover the bet","Bet Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
             if (newCreditAmount > Integer.parseInt(playerCreditLabel.getText())) {
                 winningBannerLabel.setVisible(true);
             }
             playerCreditLabel.setText(Integer.toString(newCreditAmount));
             clearPrizeHighlight();
             prizeHighlight(controller.getHandValue());
-            if (controller.getPlayPhase() == 0) {
+            updateCards();
+            repaint();
+            if (controller.getPlayPhase() == PlayPhase.BETTING) {
                 dealButton.setText("Deal");
                 holdingPromptLabel.setVisible(false);
                 bettingPromptLabel.setVisible(true);
             }
-            else {
+            else if (controller.getPlayPhase() == PlayPhase.HOLDING){
                 dealButton.setText("Draw");
                 holdingPromptLabel.setVisible(true);
                 bettingPromptLabel.setVisible(false);
             }
-            updateCards();
-            repaint();
+            else if (controller.getPlayPhase() == PlayPhase.GAME_OVER){
+                int result = JOptionPane.showConfirmDialog(frame,"Would you like to play again?",
+                        "Game Over :(",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    controller.resetGame();
+                    playerCreditLabel.setText("100");
+                    playerBetLabel.setText("1");
+                }
+            }
         }
     }
 
@@ -310,6 +329,9 @@ class VideoPokerUI extends JFrame{
             }
             if (controller.changeBet(newValue)) {
                 playerBetLabel.setText(Integer.toString(newValue));
+            }
+            else if (Integer.parseInt(playerBetLabel.getText()) > Integer.parseInt(playerCreditLabel.getText())){
+                playerBetLabel.setText(playerCreditLabel.getText());
             }
         }
     }

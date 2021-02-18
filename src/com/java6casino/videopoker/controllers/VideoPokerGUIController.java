@@ -4,6 +4,8 @@ import com.java6casino.videopoker.Card;
 import com.java6casino.videopoker.Dealer;
 import com.java6casino.videopoker.PlayPhase;
 import com.java6casino.videopoker.WinType;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public class VideoPokerGUIController {
     }
 
     // Process the Deal/Draw event.  Returns player credits as these events can affect that value.
-    public int processDealDrawEvent(int betAmount) {
+    public int processDealDrawEvent(JFrame frame, Integer betAmount) {
         if (phase == PlayPhase.BETTING) {
             system.transitionToHoldingPhase(betAmount);
         }
@@ -73,8 +75,8 @@ public class VideoPokerGUIController {
         return system.getP1().getCredits();
     }
 
-    public int getPlayPhase(){
-        return (phase == PlayPhase.BETTING)? 0 : 1;
+    public PlayPhase getPlayPhase(){
+        return system.getPhase();
     }
 
     // get hand value
@@ -133,5 +135,10 @@ public class VideoPokerGUIController {
         }
         result += card.getRank().getRankValue();
         return (result -1);
+    }
+
+    public void resetGame() {
+        system = new Dealer();
+        phase = PlayPhase.BETTING;
     }
 }
