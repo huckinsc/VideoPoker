@@ -44,15 +44,15 @@ class VideoPokerUI extends JFrame{
     private final int CARD_Y_SIZE = 75;
 
     private final String[] prizeLabelStrings = {
-            "Royal Flush............................................................x250",
-            "Straight Flush..........................................................x50",
-            "Four of a Kind..........................................................x25",
-            "Full House.................................................................x9",
-            "Flush.........................................................................x6",
-            "Straight.....................................................................x4",
-            "Three of a Kind..........................................................x3",
-            "Two Pairs...................................................................x2",
-            "Pair of Jacks of Better.................................................x1"
+            "Royal Flush............................x250",
+            "Straight Flush..........................x50",
+            "Four of a Kind..........................x25",
+            "Full House...............................x9",
+            "Flush....................................x6",
+            "Straight.................................x4",
+            "Three of a Kind..........................x3",
+            "Two Pairs................................x2",
+            "Pair of Jacks of Better..................x1"
     };
 
     // Fields
@@ -76,7 +76,7 @@ class VideoPokerUI extends JFrame{
     public VideoPokerUI(String title, VideoPokerGUIController controller) {
         super(title);
 
-        font = new Font("Lucidia Grande",Font.PLAIN,13);
+        font = new Font("Courier",Font.PLAIN,13);
         this.controller = controller;
         frame = this;
 
@@ -106,7 +106,7 @@ class VideoPokerUI extends JFrame{
 
         JLabel creditLabel = new JLabel("Credits:",SwingConstants.LEFT);
         creditLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET,CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
-        creditLabel.setFont(font);
+        creditLabel.setFont(new Font("Courier",Font.PLAIN,10));
         add(creditLabel);
 
         playerBetLabel = new JLabel("1",SwingConstants.RIGHT);
@@ -117,7 +117,7 @@ class VideoPokerUI extends JFrame{
 
         JLabel betLabel = new JLabel("Bet:",SwingConstants.LEFT);
         betLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET + 30,CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
-        betLabel.setFont(font);
+        betLabel.setFont(new Font("Courier",Font.PLAIN,10));
         add(betLabel);
 
         holdingPromptLabel = new JLabel("Select cards to hold",SwingConstants.CENTER);
