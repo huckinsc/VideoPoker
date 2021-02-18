@@ -52,7 +52,11 @@ public class Dealer {
             replaceCards();
             WinType win = playerHand.calculateWin();
             p1.setCredits(p1.getCredits() + payoutWinnings(win));
-            phase = PlayPhase.BETTING;
+            if (p1.getCredits() > 0) {
+                phase = PlayPhase.BETTING;
+            } else {
+                phase = PlayPhase.GAME_OVER;
+            }
         }
     }
 

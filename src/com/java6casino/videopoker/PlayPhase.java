@@ -1,5 +1,5 @@
 package com.java6casino.videopoker;
 
 public enum PlayPhase {
-    BETTING, HOLDING
+    BETTING, HOLDING, GAME_OVER;
 }
