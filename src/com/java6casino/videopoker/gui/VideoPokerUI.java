@@ -16,7 +16,7 @@ import java.util.List;
 class VideoPokerUI extends JFrame{
     // Finals
     private final int FRAME_X_SIZE = 400;
-    private final int FRAME_Y_SIZE = 525;
+    private final int FRAME_Y_SIZE = 550;
     private final int CARD_X_OFFSET1 = 25;
     private final int CARD_X_OFFSET2 = 75;
     private final int CARD_Y_OFFSET = 325;
@@ -70,13 +70,16 @@ class VideoPokerUI extends JFrame{
     private JLabel holdingPromptLabel;
     private JLabel winningBannerLabel;
     private JFrame frame;
+    private Font font;
 
     // Constructors
     public VideoPokerUI(String title, VideoPokerGUIController controller) {
         super(title);
 
+        font = new Font("Lucidia Grande",Font.PLAIN,13);
         this.controller = controller;
         frame = this;
+
         setLocation(200,200);
         setSize(FRAME_X_SIZE, FRAME_Y_SIZE);
         setResizable(false);
@@ -92,24 +95,29 @@ class VideoPokerUI extends JFrame{
         dealButton = new JButton("Deal");
         dealButton.setBounds(DEAL_BUTTON_X_OFFSET,DEAL_BUTTON_Y_OFFSET,DEAL_BUTTON_SIZE,DEAL_BUTTON_SIZE);
         dealButton.addActionListener(new HandleDealButtonClick());
+        dealButton.setFont(font);
         add(dealButton);
 
         playerCreditLabel = new JLabel("100",SwingConstants.RIGHT);
         playerCreditLabel.setBounds(PLAYER_CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET,
                                     PLAYER_CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
+        playerCreditLabel.setFont(font);
         add(playerCreditLabel);
 
         JLabel creditLabel = new JLabel("Credits:",SwingConstants.LEFT);
         creditLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET,CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
+        creditLabel.setFont(font);
         add(creditLabel);
 
         playerBetLabel = new JLabel("1",SwingConstants.RIGHT);
         playerBetLabel.setBounds(PLAYER_CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET + 30,
                 PLAYER_CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
+        playerBetLabel.setFont(font);
         add(playerBetLabel);
 
         JLabel betLabel = new JLabel("Bet:",SwingConstants.LEFT);
         betLabel.setBounds(CREDITS_LABEL_X_OFFSET,PLAYER_CREDITS_LABEL_Y_OFFSET + 30,CREDITS_LABEL_X_SIZE,LABEL_Y_SIZE);
+        betLabel.setFont(font);
         add(betLabel);
 
         holdingPromptLabel = new JLabel("Select cards to hold",SwingConstants.CENTER);
@@ -117,6 +125,7 @@ class VideoPokerUI extends JFrame{
         holdingPromptLabel.setOpaque(true);
         holdingPromptLabel.setBackground(Color.CYAN);
         holdingPromptLabel.setVisible(false);
+        holdingPromptLabel.setFont(font);
         add(holdingPromptLabel);
 
         bettingPromptLabel = new JLabel("Adjust Bet",SwingConstants.CENTER);
@@ -124,12 +133,14 @@ class VideoPokerUI extends JFrame{
                 CREDITS_LABEL_X_SIZE + PLAYER_CREDITS_LABEL_X_SIZE ,LABEL_Y_SIZE );
         bettingPromptLabel.setOpaque(true);
         bettingPromptLabel.setBackground(Color.CYAN);
+        bettingPromptLabel.setFont(font);
         add(bettingPromptLabel);
 
         winningBannerLabel = new JLabel();
         winningBannerLabel.setBounds(50,0,300,50);
         winningBannerLabel.setIcon(generateImageIcon("assets/Banner/winnerBanner.png",300,50));
         winningBannerLabel.setVisible(false);
+        winningBannerLabel.setFont(font);
         add(winningBannerLabel);
 
         addBetButtons();
@@ -143,6 +154,7 @@ class VideoPokerUI extends JFrame{
             card.setBounds((i * CARD_X_OFFSET2) + CARD_X_OFFSET1, CARD_Y_OFFSET,CARD_X_SIZE, CARD_Y_SIZE);
             card.setIcon(generateImageIcon("assets/Banner/cardBack_red2.png",CARD_X_SIZE,CARD_Y_SIZE));
             card.addActionListener(handleCardButtonClick);
+            card.setFont(font);
             add(card);
             cardButtons[i] = card;
         }
@@ -156,6 +168,7 @@ class VideoPokerUI extends JFrame{
             label.setBackground(Color.RED);
             label.setOpaque(true);
             label.setVisible(false);
+            label.setFont(font);
             add(label);
             holdLabels[i] = label;
         }
@@ -168,6 +181,7 @@ class VideoPokerUI extends JFrame{
                     PRIZE_LABEL_X_SIZE,LABEL_Y_SIZE);
             label.setOpaque(false);
             label.setBackground(Color.GREEN);
+            label.setFont(font);
             add(label);
             prizeLabels[i] = label;
         }
@@ -179,6 +193,7 @@ class VideoPokerUI extends JFrame{
         JButton temp = new JButton("+1");
         temp.addActionListener(handleBetButtonClick);
         temp.setBounds(BET_BUTTON_X_OFFSET,BET_BUTTON_Y_OFFSET,BET_BUTTON_SIZE,BET_BUTTON_SIZE);
+        temp.setFont(font);
         add(temp);
         betButtons[0] = temp;
 
@@ -186,6 +201,7 @@ class VideoPokerUI extends JFrame{
         temp = new JButton("-1");
         temp.addActionListener(handleBetButtonClick);
         temp.setBounds(BET_BUTTON_X_OFFSET,BET_BUTTON_Y_OFFSET + 40,BET_BUTTON_SIZE,BET_BUTTON_SIZE);
+        temp.setFont(font);
         add(temp);
         betButtons[1] = temp;
 
@@ -193,6 +209,7 @@ class VideoPokerUI extends JFrame{
         temp = new JButton("+10");
         temp.addActionListener(handleBetButtonClick);
         temp.setBounds(BET_BUTTON_X_OFFSET + 40,BET_BUTTON_Y_OFFSET,BET_BUTTON_SIZE,BET_BUTTON_SIZE);
+        temp.setFont(font);
         add(temp);
         betButtons[2] = temp;
 
@@ -200,6 +217,7 @@ class VideoPokerUI extends JFrame{
         temp = new JButton("-10");
         temp.addActionListener(handleBetButtonClick);
         temp.setBounds(BET_BUTTON_X_OFFSET + 40,BET_BUTTON_Y_OFFSET + 40,BET_BUTTON_SIZE,BET_BUTTON_SIZE);
+        temp.setFont(font);
         add(temp);
         betButtons[3] = temp;
     }
